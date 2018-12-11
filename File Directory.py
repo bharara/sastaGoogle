@@ -11,9 +11,9 @@ def printInFolder(files):
 		print(n,i)
 		n+=1
 
-filename = "D:/3- DSA/Project/simple//articles/u/n/i/"
+filename = "D:/3- DSA/Project/simple/articles/u/n/i"
 arrayofpath = Path (filename).glob("**/*")
 
 files=[x for x in arrayofpath if x.is_file()]
-#print(len(filename))
+
 printInFolder(files)
