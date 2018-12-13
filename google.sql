@@ -1,10 +1,12 @@
+drop schema if exists sastaGoogle;
 CREATE SCHEMA sastaGoogle;
 USE sastaGoogle;
 
 
 create table files (
 	fileID varchar(32) primary key,
-    fileAdd varchar(100));
+    fileAdd varchar(240),
+    category int);
     
 create table wordFile (
 	fileID varchar(32),
