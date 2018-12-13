@@ -1,7 +1,9 @@
 from bs4 import BeautifulSoup
 
-file = "D:/3- DSA/Project/simple/articles/%/_/_/%.html"
+file = "D:/3- DSA/Project/simple/articles/u/n/i/United_States_09d4.html"
 
 soup = BeautifulSoup(open(file, encoding="utf-8"), 'html.parser')
 
 print(soup.get_text().split())
+for i in soup.find_all('title'):
+	print(i.get_text())
