@@ -20,27 +20,29 @@ def hashF (val):
 
 def writeToDB(files):
 	for i in files:
-		i = str(i)
+		i = str(i)[33:]
 		## ALL talk pages, user pages and templates are ignored
-		if any(x in  i[40:].lower() for x in ['talk~','user~','template~']):
+		if any(x in  i.lower() for x in ['talk~','user~','template~']):
 			continue
 		
 		## Remaing files are categorized as
 		## 1 for articles
 		## 2 for Categories
 		## 3 for Images
-		if 'Category~' in i[40:]: cat = 2
-		elif 'Image~' in i[40:]: cat = 3
+		if 'Category~' in i: cat = 2
+		elif 'Image~' in i: cat = 3
 		else: cat = 1
 
 		try:
-			Google.execute("""INSERT INTO files (fileID, fileAdd, category) VALUES ("%s", "%s", "%d")""" % (hashF(i), i, cat))
+			Google.execute("""INSERT INTO files (fileID, fileAdd, category) VALUES ("%s", "%s", "%d")""" % (hashF(i), i.replace("\\","/",4), cat))
+			print(hashF(i), i, cat)
 		except:
-			print(i)
+			print(hashF(i), i, cat)
 
 
 # Prepare Files to Be fond in directory
-filename = 'D:/3- DSA/Project/simple/articles/'
+rootFolder = 'D:/3- DSA/Project/simple/articles'
+filename = rootFolder+''
 arrayofpath = Path (filename).glob("**/*")
 files=[x for x in arrayofpath if x.is_file()]
 
