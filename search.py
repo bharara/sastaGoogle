@@ -24,34 +24,40 @@ def hashF (val):
 def search (words):
 
 	fileMap = {}
-	for word in words.split():
+	for word in words:
 		getFile(fileMap, word)
 
+	for key, val in fileMap.items():
+		fileMap[key] = val[0] * val[1]
+
 	for file,score in sorted(fileMap.items(), key=operator.itemgetter(1), reverse=True):
-		Google.execute("""SELECT fileAdd, category
+		Google.execute("""SELECT fileAdd
 		FROM files
 		WHERE fileID = "%s";"""
 		% (file))
 
 		data = Google.fetchall()
-		for i in data:
-			print(score, i[0], i[1])
+		print(score, data[0][0][7:-5].replace('_',' '))
 
 def getFile(fileMap, word):
 	Google.execute("""SELECT fileID, score
 		FROM wordfile
-		WHERE wordID = "%s";"""
+		WHERE wordID = "%s"
+		LIMIT 10;"""
 		% (hashF(word)))
 
 	data = Google.fetchall()
 	for i in data:
 		if i[0] in fileMap:
-			fileMap[i[0]] += i[1]
+			fileMap[i[0]][0] += i[1]
+			fileMap[i[0]][1] += 1
 		else:
-			fileMap[i[0]] = i[1]
+			fileMap[i[0]] = [i[1],1]
 
-word = input("Enter search word: ")
-word = word.lower().translate(translator)
+
+word = "dubai india"
+#word = input("Enter search word: ")
+word = word.lower().translate(translator).split()
 search(word)
 
 # Closes the connection

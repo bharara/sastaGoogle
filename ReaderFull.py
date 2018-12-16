@@ -20,7 +20,7 @@ conn = pymysql.connect(
     port=3306,
     user='root',
     passwd='090078601',
-    db='chotaGoogle')
+    db='sastaGoogle')
 Google = conn.cursor()
 
 ## Hashing up the filename/word for storing
@@ -35,6 +35,7 @@ def runfiles(filename):
 		if any(x in i[40:].lower() for x in ['talk~','user~','template~','category~','image~']):
 			continue
 		countWords(i)
+		conn.commit()
 
 def countWords(file):
 		
@@ -55,29 +56,31 @@ def countWords(file):
 		## normal text - 1
 		################
 		for i in soup.find_all('title'):
-			for j in i.get_text().split():
+			for j in i.get_text().lower().translate(translator).split():
 				incrementValue(wordMap,j,100)
 		for i in soup.find_all('h1'):
-			for j in i.get_text().split():
+			for j in i.get_text().lower().translate(translator).split():
 				incrementValue(wordMap,j,100)
 		for i in soup.find_all('h2'):
-			for j in i.get_text().split():
+			for j in i.get_text().lower().translate(translator).split():
 				incrementValue(wordMap,j,10)
 		for i in soup.find_all('h3'):
-			for j in i.get_text().split():
+			for j in i.get_text().lower().translate(translator).split():
 				incrementValue(wordMap,j,30)
 		for i in soup.find_all('h4'):
-			for j in i.get_text().split():
+			for j in i.get_text().lower().translate(translator).split():
 				incrementValue(wordMap,j,20)
-		for i in soup.get_text().split():
+		for i in soup.get_text().lower().translate(translator).split():
 			incrementValue(wordMap,i,1)
 
-		for word,score in sorted(wordMap.items(), key=operator.itemgetter(1), reverse=True):
+		for word,score in wordMap.items():
 			# print(word, score)
-			Google.execute("""INSERT INTO wordfile (fileID, wordID, score) VALUES ("%s", "%s", "%d")""" % (filehash, hashF(word), score))
-			
+			try:
+				Google.execute("""INSERT INTO wordfile (fileID, wordID, score) VALUES ("%s", "%s", "%d")""" % (filehash, hashF(word), score))
+			except:
+				print (filehash, word, score)
+				errorCount += 1
 def incrementValue(wMap,word,score):
-	word = word.lower().translate(translator)
 	if word in wMap:
 		wMap[word] += score
 	else:
@@ -85,11 +88,12 @@ def incrementValue(wMap,word,score):
 
 
 # Prepare Files to Be fond in directory
-filename = 'D:/3- DSA/Project/simple/articles/u/n/i'
-
+filename = 'D:/3- DSA/Project/simple/articles'
+errorCount = 0
 # Write files to DB
 runfiles(filename)
 conn.commit()
+print(errorCount)
 
 # Closes the connection
 Google.close()

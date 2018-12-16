@@ -11,7 +11,7 @@ conn = pymysql.connect(
     port=3306,
     user='root',
     passwd='090078601',
-    db='sastaGoogle')
+    db='chotaGoogle')
 Google = conn.cursor()
 
 ## Hashing up the filename/word for storing
@@ -37,11 +37,11 @@ def writeToDB(files):
 			Google.execute("""INSERT INTO files (fileID, fileAdd, category) VALUES ("%s", "%s", "%d")""" % (hashF(i), i.replace("\\","/",4), cat))
 			print(hashF(i), i, cat)
 		except:
-			print(hashF(i), i, cat)
+			print(i, cat)
 
 
 # Prepare Files to Be fond in directory
-rootFolder = 'D:/3- DSA/Project/simple/articles'
+rootFolder = 'D:/3- DSA/Project/simple/articles/u/n/i'
 filename = rootFolder+''
 arrayofpath = Path (filename).glob("**/*")
 files=[x for x in arrayofpath if x.is_file()]
