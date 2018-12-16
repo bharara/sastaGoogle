@@ -1,19 +1,7 @@
-import pymysql
+import hashlib
 
-# Establishes the connection to database
-conn = pymysql.connect(
-    host='127.0.0.1',
-    port=3306,
-    user='root',
-    passwd='090078601',
-    db='sastaGoogle')
-Google = conn.cursor()
+## Hashing up the filename/word for storing
+def hashF (val):
+	return hashlib.md5(val.encode()).hexdigest()
 
-Google.execute("ALTER TABLE wordfile DROP PRIMARY KEY;")
-conn.commit()
-Google.execute("ALTER TABLE wordfile ADD primary key (wordID, fileID);")
-conn.commit()
-
-# Closes the connection
-Google.close()
-conn.close()
+print(hashF("islam"))

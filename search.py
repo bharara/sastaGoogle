@@ -14,7 +14,7 @@ conn = pymysql.connect(
     port=3306,
     user='root',
     passwd='090078601',
-    db='chotaGoogle')
+    db='sastaGoogle')
 Google = conn.cursor()
 
 ## Hashing up the filename/word for storing
@@ -55,7 +55,7 @@ def getFile(fileMap, word):
 			fileMap[i[0]] = [i[1],1]
 
 
-word = "dubai india"
+word = "islam"
 #word = input("Enter search word: ")
 word = word.lower().translate(translator).split()
 search(word)

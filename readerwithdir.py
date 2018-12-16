@@ -27,21 +27,47 @@ Google = conn.cursor()
 def hashF (val):
 	return hashlib.md5(val.encode()).hexdigest()
 
+def topFolder(filename):
+	arrayofpath = Path (filename).glob("*/")
+	files = [x for x in arrayofpath]
+
+	for i in files:
+		i = str(i)
+
+		print(i[-4:],"started")
+		fileMap = runfiles(i)
+		print(i[-4:],"returned")
+		arr = returnSorted(fileMap)
+		print(i[-4:],"sorted")
+
+		for j in range(len(arr)):
+			arr[j] = (arr[j][1],arr[j][0],arr[j][2])
+
+		print(i[-4:],"arrayed")
+		Google.executemany("INSERT INTO wordfile (fileID, wordID, score) VALUES (%s, %s, %s)", arr)
+		conn.commit()
+		print("===========DONE==========", i[-4:])
+
 def runfiles(filename):
 	arrayofpath = Path (filename).glob("**/*")
-	files=[x for x in arrayofpath if x.is_file()]
+	files = [x for x in arrayofpath if x.is_file()]
+	
+	fileMap = {}
+	n = 1
 	for i in files:
 		i = str(i)
 		if any(x in i[40:].lower() for x in ['talk~','user~','template~','category~','image~']):
 			continue
-		countWords(i)
-		conn.commit()
+		print(i)
+		countWords(i, fileMap)
+		n += 1
+	return fileMap
 
-def countWords(file):
+def countWords(file, fileMap):
 		
 		soup = BeautifulSoup(open(file, encoding="utf-8"), 'html.parser')
 		filehash = hashF(file[33:])		
-		print(file[33:],filehash)
+		#print(file[33:],filehash)
 
 		wordMap = {} 
 
@@ -55,46 +81,49 @@ def countWords(file):
 		## h6 - 0
 		## normal text - 1
 		################
-		for i in soup.find_all('title'):
-			for j in i.get_text().lower().translate(translator).split():
-				incrementValue(wordMap,j,100)
-		for i in soup.find_all('h1'):
-			for j in i.get_text().lower().translate(translator).split():
-				incrementValue(wordMap,j,100)
-		for i in soup.find_all('h2'):
-			for j in i.get_text().lower().translate(translator).split():
-				incrementValue(wordMap,j,10)
-		for i in soup.find_all('h3'):
-			for j in i.get_text().lower().translate(translator).split():
-				incrementValue(wordMap,j,30)
-		for i in soup.find_all('h4'):
-			for j in i.get_text().lower().translate(translator).split():
-				incrementValue(wordMap,j,20)
+
+		for tag in [['title',100], ['h1',100], ['h2',10], ['h3',30], ['h4',20]]:
+			for i in soup.find_all(tag[0]):
+				for j in i.get_text().lower().translate(translator).split():
+					incrementValue(wordMap,j,tag[1])
 		for i in soup.get_text().lower().translate(translator).split():
 			incrementValue(wordMap,i,1)
 
-		for word,score in wordMap.items():
-			# print(word, score)
-			try:
-				Google.execute("""INSERT INTO wordfile (fileID, wordID, score) VALUES ("%s", "%s", "%d")""" % (filehash, hashF(word), score))
-			except:
-				print (filehash, word, score)
-				errorCount += 1
+		fileMap[filehash] = wordMap
+
 def incrementValue(wMap,word,score):
 	if word in wMap:
 		wMap[word] += score
 	else:
 		wMap[word] = score
 
+def returnSorted(fileMap):
+	arr = []
+	for file in fileMap.keys():
+		for word in fileMap[file].items():
+			arr.append((hashF(word[0]), file, word[1]))
+	return sorted(arr)
 
 # Prepare Files to Be fond in directory
 filename = 'D:/3- DSA/Project/simple/articles'
+#topFolder(filename)
 errorCount = 0
 # Write files to DB
-runfiles(filename)
+fileMap = runfiles(filename)
+print("returned")
+arr = returnSorted(fileMap)
+print("sorted")
+
+for j in range(len(arr)):
+	arr[j] = (arr[j][1],arr[j][0],arr[j][2])
+
+print("arrayed")
+Google.executemany("INSERT INTO wordfile (fileID, wordID, score) VALUES (%s, %s, %s)", arr)
 conn.commit()
 print(errorCount)
 
 # Closes the connection
 Google.close()
-conn.close()     
+conn.close()
+
+

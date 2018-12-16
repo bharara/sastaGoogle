@@ -14,4 +14,4 @@ create table wordFile (
     primary key (wordID, fileID)
     );
 
-grant all privileges on sastagoogle.* to 'root'@localhost;  
+grant all privileges on sastagoogle.* to 'root'@localhost;
