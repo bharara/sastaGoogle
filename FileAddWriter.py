@@ -11,7 +11,7 @@ conn = pymysql.connect(
     port=3306,
     user='root',
     passwd='090078601',
-    db='chotaGoogle')
+    db='sastaGoogle')
 Google = conn.cursor()
 
 ## Hashing up the filename/word for storing
@@ -41,7 +41,7 @@ def writeToDB(files):
 
 
 # Prepare Files to Be fond in directory
-rootFolder = 'D:/3- DSA/Project/simple/articles/u/n/i'
+rootFolder = 'D:/3- DSA/Project/simple/articles'
 filename = rootFolder+''
 arrayofpath = Path (filename).glob("**/*")
 files=[x for x in arrayofpath if x.is_file()]
