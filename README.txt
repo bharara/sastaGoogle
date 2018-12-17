@@ -26,6 +26,14 @@ includes fileID, wordID and score (based on count and importance in text). It is
 
 =====================================
 
+= Group Members
+=== Abdul Hadi
+=== Abdullah Saeed
+=== M. Hamza Zahid
+=== Muhammad Bilal
+
+=====================================
+
 =Others
 
 === The root folder of dataset storage and database password are hardcoded in each file
