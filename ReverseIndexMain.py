@@ -1,18 +1,18 @@
 ###############
 ##
-##	This code reads the files in /u/n/i folder and store them in chotaGoogle database
+##	This code reads the files r and store them in sastaGoogle database sorted based on wordID
 ##	It also read all words and store them in wordfile table
+##	Line 15 root and line 22 password are relitive
 ##
 ###############
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup ## HTML Parser and Striper library
 import os, os.path
-from pathlib import Path
-import hashlib
-import pymysql
+from pathlib import Path ## Access folders
+import hashlib ## Hashing Library
+import pymysql ## Database library
 import string
 
-# Prepare Punctuation Striper
-translator = str.maketrans('', '', string.punctuation)
+rootFolder = 'D:/3- DSA/Project/simple/articles'
 
 # Establishes the connection to database
 conn = pymysql.connect(
@@ -26,27 +26,6 @@ Google = conn.cursor()
 ## Hashing up the filename/word for storing
 def hashF (val):
 	return hashlib.md5(val.encode()).hexdigest()
-
-def topFolder(filename):
-	arrayofpath = Path (filename).glob("*/")
-	files = [x for x in arrayofpath]
-
-	for i in files:
-		i = str(i)
-
-		print(i[-4:],"started")
-		fileMap = runfiles(i)
-		print(i[-4:],"returned")
-		arr = returnSorted(fileMap)
-		print(i[-4:],"sorted")
-
-		for j in range(len(arr)):
-			arr[j] = (arr[j][1],arr[j][0],arr[j][2])
-
-		print(i[-4:],"arrayed")
-		Google.executemany("INSERT INTO wordfile (fileID, wordID, score) VALUES (%s, %s, %s)", arr)
-		conn.commit()
-		print("===========DONE==========", i[-4:])
 
 def runfiles(filename):
 	arrayofpath = Path (filename).glob("**/*")
@@ -63,6 +42,7 @@ def runfiles(filename):
 		n += 1
 	return fileMap
 
+## Make the freqency table of words in a file and commit them to database
 def countWords(file, fileMap):
 		
 		soup = BeautifulSoup(open(file, encoding="utf-8"), 'html.parser')
@@ -97,6 +77,7 @@ def incrementValue(wMap,word,score):
 	else:
 		wMap[word] = score
 
+# sort the dictionary based on wordID and store it in array(tuple)
 def returnSorted(fileMap):
 	arr = []
 	for file in fileMap.keys():
@@ -104,25 +85,30 @@ def returnSorted(fileMap):
 			arr.append((hashF(word[0]), file, word[1]))
 	return sorted(arr)
 
-# Prepare Files to Be fond in directory
-filename = 'D:/3- DSA/Project/simple/articles'
-#topFolder(filename)
-errorCount = 0
-# Write files to DB
+
+# Prepare Punctuation Striper
+translator = str.maketrans('', '', string.punctuation)
+
+################### 	MAIN #######################
 fileMap = runfiles(filename)
-print("returned")
+print("In dictionary")
 arr = returnSorted(fileMap)
 print("sorted")
 
+# Convert in into right order
 for j in range(len(arr)):
 	arr[j] = (arr[j][1],arr[j][0],arr[j][2])
 
-print("arrayed")
+print("In array")
+
+## Insert into Database
 Google.executemany("INSERT INTO wordfile (fileID, wordID, score) VALUES (%s, %s, %s)", arr)
 conn.commit()
-print(errorCount)
+print("In database - DONEEEEEEEE")
 
-# Closes the connection
+##################################################
+
+## Closes the connection
 Google.close()
 conn.close()
 

@@ -1,7 +1,6 @@
-import hashlib
+from bs4 import BeautifulSoup ## HTML Parser and Striper library
 
-## Hashing up the filename/word for storing
-def hashF (val):
-	return hashlib.md5(val.encode()).hexdigest()
+rootFolder = 'D:/3- DSA/Project/simple/articles/u/n/i/Category~Uniforms_d3e0.html'
+soup = BeautifulSoup(open(rootFolder, encoding="utf-8"), 'html.parser')
 
-print(hashF("islam"))
+print(soup.get_text())

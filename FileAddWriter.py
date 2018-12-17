@@ -1,9 +1,12 @@
 ## This file writes all files and there address to database
+## Password at line 16 and address at root 9 are relitive to the local computer
 
 import os, os.path
 from pathlib import Path
 import hashlib
 import pymysql
+
+rootFolder = 'D:/3- DSA/Project/simple/articles'
 
 # Establishes the connection to database
 conn = pymysql.connect(
@@ -41,7 +44,7 @@ def writeToDB(files):
 
 
 # Prepare Files to Be fond in directory
-rootFolder = 'D:/3- DSA/Project/simple/articles'
+
 filename = rootFolder+''
 arrayofpath = Path (filename).glob("**/*")
 files=[x for x in arrayofpath if x.is_file()]

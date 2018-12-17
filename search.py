@@ -42,8 +42,7 @@ def search (words):
 def getFile(fileMap, word):
 	Google.execute("""SELECT fileID, score
 		FROM wordfile
-		WHERE wordID = "%s"
-		LIMIT 10;"""
+		WHERE wordID = "%s";"""
 		% (hashF(word)))
 
 	data = Google.fetchall()
@@ -55,7 +54,7 @@ def getFile(fileMap, word):
 			fileMap[i[0]] = [i[1],1]
 
 
-word = "islam"
+word = "pakistan india"
 #word = input("Enter search word: ")
 word = word.lower().translate(translator).split()
 search(word)
