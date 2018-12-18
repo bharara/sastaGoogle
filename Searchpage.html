@@ -4,6 +4,8 @@
 	<title>Search Page</title>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<link href="https://fonts.googleapis.com/css?family=Charm" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=News+Cycle" rel="stylesheet">
 	  <style type="text/css">
     body{
 
@@ -21,6 +23,14 @@
   margin-top:2%;
   
   }
+  #id {
+    position:absolute;
+    bottom:2px;
+    right:355px;
+    width:24px;
+    height:24px;
+    color:grey;
+}
   </style>
 </head>
 <body>
@@ -32,17 +42,20 @@
 		<div style="background-image: linear-gradient(to right,#7F7FD5,#86A8E7,#91EAE4);border-radius:15px 50px 30px;" class="jumbotron">
 			
  
-  <div class="row">
+  <div class="input-container row">
    
-    <div class="col-lg-1.5">
+    <div class="col-lg-2">
    	
   			
-    			<span style=" font-size:20px;"class="input-group-text" id="basic-addon1">Search</span>
+    			<span style=" font-size:25px;font-family: 'News Cycle', sans-serif;"class="input-group-text" id="basic-addon1">Search</span>
   			
   	</div>
 
-  	 <div class="col-lg-10.5">
-  			<input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
+  	 <div class="col-lg-10 input_container">
+  	
+  			<input  style=" font-size:20px ;font-family: 'Charm', cursive;padding-left:20px;" type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
+  			<i class="fa fa-search" id="id" aria-hidden="true"></i>
+
   	</div>
     
  
@@ -52,13 +65,13 @@
   
   	<div style="margin-top:20px; "class="row">
     	<div class="col-sm-4">
-        <a style="border-radius:15px" id="loginbutton" class="btn btn-info" href="doctorlogin.html" role="button">Button 1</a>
+        <a style="border-radius:15px;" id="loginbutton" class="btn btn-info" href="doctorlogin.html" role="button">Button 1</a>
          </div>
          <div class="col-sm-4">
-        <a style="border-radius:15px" id="loginbutton" class="btn btn-info" href="doctorlogin.html" role="button">Button 2</a>
+        <a style="border-radius:15px; margin-left: 25px;" id="loginbutton" class="btn btn-info" href="doctorlogin.html" role="button">Button 2</a>
         </div>
         <div class="col-sm-4">
-         <a style="border-radius:15px" id="loginbutton" class="btn btn-info" href="doctorlogin.html" role="button">Button 3</a>
+         <a style="border-radius:15px; margin-left: 50px;" id="loginbutton" class="btn btn-info" href="doctorlogin.html" role="button">Button 3</a>
     	</div>
   </div>
 
