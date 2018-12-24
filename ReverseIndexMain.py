@@ -61,7 +61,7 @@ def countWords(file, fileMap):
 		## h6 - 0
 		## normal text - 1
 		################
-
+		
 		for tag in [['title',100], ['h1',100], ['h2',10], ['h3',30], ['h4',20]]:
 			for i in soup.find_all(tag[0]):
 				for j in i.get_text().lower().translate(translator).split():
