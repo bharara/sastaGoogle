@@ -1,3 +1,34 @@
+
+  a:hover{ 
+          color:white;
+  }
+
+  body{
+
+  background-image: linear-gradient(to right,#B8B8EB,#B5CAEE,#C2EEEB);
+  }
+
+.container{
+  margin-top: 0.1%;
+
+  }
+.jumbotron{
+
+  width:50%;
+  margin:0 auto;
+  margin-top:2%;
+  
+  }
+  #id {
+    position:absolute;
+    bottom:2px;
+    right:435px;
+    width:24px;
+    height:24px;
+    color:grey;
+}
+
+
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{query}} - sastaGoogle</title>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+	<link rel=stylesheet type=text/css href="/static/bootstrap.css">
+	<link href="https://fonts.googleapis.com/css?family=Charm" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=News+Cycle" rel="stylesheet">
+</head>
+<body>
+
+	{% if showBar %}
+		{% include "searchbar.html" %}
+	{% else %}
+		<h1 style="color:white;font-size:150px; padding-left:45%;padding-top:0.5px;  "><a href='/'><i class="fa fa-search" aria-hidden="true"></i></a></h1>
+	{% endif %}
+
+	<hr>
+
+
+	<div style="margin-top: 5px;"class="container">
+
+		{% for link, title in results: %}
+		<form type="POST">
+		<div style="background-image: linear-gradient(to right,#7F7FD5,#86A8E7,#91EAE4); border-radius:45px 45px 100px 100px;">
+			<a href="{{url_for('static', filename=link)}}" style="color:white; font-size: 30px; padding: 50px;"> {{title}} </a>
+		</div>
+		</form>
+		<hr>
+
+		{% endfor %}
+
+		{% if showBar %}
+		<div style="margin: auto; align-content: center;">
+			<a href="/allResults" style="font-size: 30px; text-decoration: none; color: white">See More </a>
+		</div>
+		{% endif %}
+		
+	</div>
+</body>
+</html>

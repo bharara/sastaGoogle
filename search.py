@@ -2,6 +2,7 @@ import os, os.path
 from pathlib import Path
 import hashlib
 import pymysql
+import webbrowser
 import string
 import operator
 from flask import Flask, render_template, request, redirect, url_for, flash
@@ -39,12 +40,11 @@ def search (words):
 		% (file))
 
 		data = Google.fetchall()
-		results.append([rootFolder+data[0][0],data[0][0][7:-5].replace("_"," ")])
+		results.append(["simple/articles"+data[0][0],data[0][0][7:-5].replace("_"," ")])
 
 	# Closes the connection
 	Google.close()
 	conn.close()
-
 	return results
 
 def getFile(fileMap, word, Google):
@@ -68,24 +68,22 @@ app = Flask(__name__)
 def homepage():
 	return render_template("Homepage.html")		
 
+@app.route('/', methods=['POST', 'GET'])
+def searchResults():
+	global query, res
+	query = request.form["query"].lower()
+	stype = request.form["b"]
+	
+	words = query.lower().translate(translator).split()
+	res = search(words)
 
-@app.route('/login', methods=['POST'])
-def loginAfter():
-	name = request.form["name"].lower()
-	password = request.form['pword']
+	return render_template("aftersearch.html", results=res[0:10], query=query, showBar=True)
 
-	if (name,password) in users:
-		return redirect('/admin')
-	else:
-		return render_template('login.html', title = 'Admin Login - AQM', flashyMsg = 'Incorrect Username or Password')
+@app.route('/allResults')
+def allResults():
+	return render_template("aftersearch.html", results=res, query=query, showBar=False)
 
-
-word = "dubai cricket"
-rootFolder = 'D:/3- DSA/Project/simple/articles'
-#word = input("Enter search word: ")
-word = word.lower().translate(translator).split()
-search(word)[0:10]
+rootFolder = 'C:/Users/Star/Documents/GitHub/dsaProject/static/simple/articles'
 
 if __name__ == "__main__":
-    app.run(debug=True,  port=6000)
-
+   app.run(debug=True, port=4999)

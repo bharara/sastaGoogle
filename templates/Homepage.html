@@ -1,80 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Search Page</title>
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-	<link rel=stylesheet type=text/css href="/static/bootstrap.css">
-	<link href="https://fonts.googleapis.com/css?family=Charm" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=News+Cycle" rel="stylesheet">
-	  <style type="text/css">
-    body{
-
-  background-image: linear-gradient(to right,#B8B8EB,#B5CAEE,#C2EEEB);
-  }
-
-.container{
-  margin-top: 0.1%;
-
-  }
-.jumbotron{
-
-  width:50%;
-  margin:0 auto;
-  margin-top:2%;
-  
-  }
-  #id {
-    position:absolute;
-    bottom:2px;
-    right:435px;
-    width:24px;
-    height:24px;
-    color:grey;
-}
-  </style>
-</head>
-<body>
-
-
-  <h1 style="color:white;font-size:150px; padding-left:45%;padding-top:0.5px;  "><i class="fa fa-search" aria-hidden="true"></i></h1>
-
-	<div class="container">
-		<div style="background-image: linear-gradient(to right,#7F7FD5,#86A8E7,#91EAE4);border-radius:450px 450px 1000px 1000px;" class="jumbotron">
-			
- 
-  <div class="input-container row">
-  
-
-  	 <div class="col-lg-12 input_container">
-  	
-  			<input  style="border-radius:100px 100px 100px 100px;font-family: 'Charm', cursive;padding-left:21px;top: 2px;" type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
-  			<i class="fa fa-search" id="id" aria-hidden="true"></i>
-
-  	</div>
+    <title>Search Page</title>
     
- 
-</div>
+    <link rel=stylesheet type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel=stylesheet type=text/css href="/static/bootstrap.css">
+    <link href="https://fonts.googleapis.com/css?family=Charm" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=News+Cycle" rel="stylesheet">
+</head>
 
+<body>
+    <h1 style="color:white;font-size:150px; padding-left:45%;padding-top:0.5px;  "><i class="fa fa-search" aria-hidden="true"></i></h1>
 
-  
-  	<div style="margin-top:20px; "class="row">
-    	<div class="col-sm-4">
-        <a style="border-radius:15px;color:#5B87FF;background-color:white;" id="loginbutton" class="btn btn-info" href="Modified Input Searchpage.html" role="button">Button 1</a>
-         </div>
-         <div class="col-sm-4">
-        <a style="border-radius:15px; margin-left: 25px;color:#5B87FF;background-color:white;" id="loginbutton" class="btn btn-info" href="Modified Input Searchpage.html" role="button">Button 2</a>
-        </div>
-        <div class="col-sm-4">
-         <a style="border-radius:15px; margin-left: 50px;color:#5B87FF;background-color:white;" id="loginbutton" class="btn btn-info" href="Modified Input Searchpage.html" role="button">Button 3</a>
-    	</div>
-  </div>
-
-
-		</div>
-	</div>
-
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {% include "searchbar.html" %}
 
 </body>
 </html>
