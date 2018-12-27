@@ -1,58 +1,37 @@
-## This file writes all files and there address to database
-## Password at line 16 and address at root 9 are relitive to the local computer
+import fun
 
-import os, os.path
-from pathlib import Path
-import hashlib
-import pymysql
+def getInsertables(files):
+	r = []
+	for filename in files:
+		filename = str(filename)[64:]
 
-rootFolder = 'D:/3- DSA/Project/simple/articles'
-
-# Establishes the connection to database
-conn = pymysql.connect(
-    host='127.0.0.1',
-    port=3306,
-    user='root',
-    passwd='090078601',
-    db='sastaGoogle')
-Google = conn.cursor()
-
-## Hashing up the filename/word for storing
-def hashF (val):
-	return hashlib.md5(val.encode()).hexdigest()
-
-def writeToDB(files):
-	for i in files:
-		i = str(i)[33:]
 		## ALL talk pages, user pages and templates are ignored
-		if any(x in  i.lower() for x in ['talk~','user~','template~']):
+		if any(x in  filename.lower() for x in ['talk~','user~','template~','wikipedia~']):
 			continue
 		
 		## Remaing files are categorized as
 		## 1 for articles
 		## 2 for Categories
 		## 3 for Images
-		if 'Category~' in i: cat = 2
-		elif 'Image~' in i: cat = 3
+		if 'Category~' in filename: cat = 2
+		elif 'Image~' in filename: cat = 3
 		else: cat = 1
 
-		try:
-			Google.execute("""INSERT INTO files (fileID, fileAdd, category) VALUES ("%s", "%s", "%d")""" % (hashF(i), i.replace("\\","/",4), cat))
-			print(hashF(i), i, cat)
-		except:
-			print(i, cat)
+		r.append((fun.hashF(filename), filename.replace("\\","/",4), cat))
 
+	return r
 
-# Prepare Files to Be fond in directory
+def writeToDB(ins):
+	try:
+	    Google.executemany("INSERT INTO files (fileID, fileAdd, category) VALUES (%s, %s, %s)", ins)
+	    conn.commit()
+	except:
+		conn.rollback()
 
-filename = rootFolder+''
-arrayofpath = Path (filename).glob("**/*")
-files=[x for x in arrayofpath if x.is_file()]
+files = fun.getFiles()
+conn, Google = fun.dbSetup()
 
-# Write files to DB
-writeToDB(files)
-conn.commit()
+ins = getInsertables(files)
+writeToDB(sorted(ins))
 
-# Closes the connection
-Google.close()
-conn.close()
+fun.dbClose(conn, Google)
