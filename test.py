@@ -1,9 +1,10 @@
-from bs4 import BeautifulSoup ## HTML Parser and Striper library
-
-rootFolder = 'D:/3- DSA/Project/simple/articles/u/n/i/Category~Uniforms_d3e0.html'
-soup = BeautifulSoup(open(rootFolder, encoding="utf-8"), 'html.parser')
-
-print(soup.get_text())
+li = ['a','b','b']
 
 
-
+s = """SELECT fileID, score
+	FROM wordfile
+	WHERE word in ("""
+for i in li:
+	s = s + """"%s", """ % (i)
+s = s[:-2] +")"
+print(s)
