@@ -1,10 +1,9 @@
-li = ['a','b','b']
+from nltk.corpus import wordnet 
 
+synonyms = []
 
-s = """SELECT fileID, score
-	FROM wordfile
-	WHERE word in ("""
-for i in li:
-	s = s + """"%s", """ % (i)
-s = s[:-2] +")"
-print(s)
+for syn in wordnet.synsets("no"):
+    for l in syn.lemmas(): 
+        synonyms.append(l.name())
+  
+print(tuple(synonyms))

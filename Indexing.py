@@ -20,10 +20,9 @@ def getFileMap():
 def countWords(file, fileMap):
 		
 		soup = BeautifulSoup(open(fun.rootFolder+file, encoding="latin-1"), 'html.parser')
-		filehash = fun.hashF(file)		
-		#print(file[33:],filehash)
+		filehash = fun.hashF(file)
 
-		wordMap = {} 
+		wordMap = {}
 
 		###### THe Weighatage of different words is
 		## title - 100
@@ -55,26 +54,21 @@ def incrementValue(wMap,word,score):
 def returnSorted(fileMap):
 	arr = []
 	for file in fileMap.keys():
-		for word in fileMap[file].items():
-			arr.append((word[0], file, word[1]))
+		for word, score in fileMap[file].items():
+			arr.append((fun.hashF(word), file, score))
 	return sorted(arr)
 
 ## Insert into Database
 def writeToDB(arr):
-	try:
-	    Google.executemany("INSERT INTO wordfile (word, fileID, score) VALUES (%s, %s, %s)", arr)
-	    conn.commit()
-	except:
-		print("=========ERROR")
-		conn.rollback()
-
+	Google.executemany("INSERT INTO wordfile (word, fileID, score) VALUES (%s, %s, %s)", arr)
+	conn.commit()
 
 if __name__ == "__main__":
+
 	conn, Google = fun.dbSetup()
 	fileMap = getFileMap()
 	print("Got fileMap")
 	arr = returnSorted(fileMap)
 	print("Sorted fileMap")
-	print(arr)
 	writeToDB(arr)
 	fun.dbClose(conn, Google)

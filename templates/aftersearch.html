@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{query}} - sastaGoogle</title>
+	<title>{{title}} - sastaGoogle</title>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 	<link rel=stylesheet type=text/css href="/static/bootstrap.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Charm" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=News+Cycle" rel="stylesheet">
 </head>
@@ -14,7 +13,8 @@
 	{% if showBar %}
 		{% include "searchbar.html" %}
 	{% else %}
-		<h1 style="color:white;font-size:150px; padding-left:45%;padding-top:0.5px;  "><a href='/'><i class="fa fa-search" aria-hidden="true"></i></a></h1>
+		<h1 style="font-size:150px; padding-left:45%;padding-top:0.5px;  "><a style="color:white;" href='/'><i class="fa fa-search" aria-hidden="true"></i></a></h1>
+		<h1 style="color:white;font-size:30px; padding-left:40%;padding-top:0.5px;  ">Total {{results|length}} results found</h1>
 	{% endif %}
 
 	<hr>
@@ -33,7 +33,7 @@
 
 		{% if showBar %}
 		<div style="margin: auto; align-content: center;">
-			<a href="/allResults" style="font-size: 30px; text-decoration: none; color: white">See More </a>
+			<a href="/allResults" style="font-size: 30px; text-decoration: none; color: white">See All </a>
 		</div>
 		{% endif %}
 		

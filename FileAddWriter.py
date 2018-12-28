@@ -1,3 +1,5 @@
+## Writes fileID and address into file table
+
 import fun
 
 def getInsertables(files):

@@ -25,7 +25,7 @@ def dbClose(conn, cur):
 	cur.close()
 	conn.close()
 
-## Hashing up the filename for storing
+## Hashing up the filename for storing: 32-bit Unique
 def hashF (val):
 	return hashlib.md5(val.encode()).hexdigest()
 
@@ -33,4 +33,3 @@ def getFiles(rF = rootFolder):
 	arrayofpath = Path (rF).glob("**/*")
 	files = [x for x in arrayofpath if x.is_file()]
 	return files
-
