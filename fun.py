@@ -4,7 +4,7 @@ import os, os.path
 from pathlib import Path
 import string
 
-rootFolder = 'C:/Users/Star/Documents/GitHub/dsaProject/static/simple/articles'
+rootFolder = 'sastaGoogle/static/simple/articles'
 
 # Prepare Punctuation Striper
 translator = str.maketrans('', '', string.punctuation)
@@ -15,7 +15,7 @@ def dbSetup():
 	    host='127.0.0.1',
 	    port=3306,
 	    user='root',
-	    passwd='090078601',
+	    passwd='pword',
 	    db='sastaGoogle')
 	cur = conn.cursor()
 	return conn, cur
