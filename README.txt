@@ -19,3 +19,5 @@ README
 === Abdullah Saeed
 === M. Hamza Zahid
 === Muhammad Bilal
+
+Explained At: https://prezi.com/view/lHNbZPk4tCD1GQF3S81a
